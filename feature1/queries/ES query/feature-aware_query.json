@@ -1,0 +1,34 @@
+GET /logs-*/_search
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": [
+        { "term": { "traceId": "abc123-def456-ghi789" } },
+        { "exists": { "field": "feature" } }
+      ],
+      "must_not": [
+        { "term": { "feature.keyword": "" } }
+      ]
+    }
+  },
+  "aggs": {
+    "feature_aware_services": {
+      "terms": {
+        "field": "service.keyword",
+        "size": 20
+      },
+      "aggs": {
+        "actions_performed": {
+          "terms": { "field": "action.keyword" }
+        },
+        "endpoints_called": {
+          "terms": { "field": "endpoint.keyword" }
+        },
+        "feature_flags": {
+          "terms": { "field": "featureFlag.keyword" }
+        }
+      }
+    }
+  }
+}
