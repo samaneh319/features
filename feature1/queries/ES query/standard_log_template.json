@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-06-16T10:23:45.123Z",
+  "level": "INFO",
+  "traceId": "abc123-def456-ghi789",
+  "spanId": "span-001",
+  "parentSpanId": "span-000",
+  "service": "service A",
+  "version": "1.2.3",
+  "environment": "stage",
+  "feature": "buy-now-pay-later",
+  "featureFlag": "BNPL_V2",
+  "userId": "user-9912",
+  "action": "INIT_PURCHASE",
+  "method": "POST",
+  "endpoint": "/purchases/init",
+  "statusCode": 200,
+  "durationMs": 145,
+  "calledBy": "Service B",
+  "calls": ["Service C", "Service D"],
+  "payload": {
+    "type": 13,
+    "providerId": "PRV-001",
+    "amount": 500000
+  },
+  "result": "SUCCESS",
+  "message": "Purchase init completed successfully"
+}
