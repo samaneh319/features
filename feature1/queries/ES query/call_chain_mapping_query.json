@@ -1,0 +1,29 @@
+GET /logs-*/_search
+{
+  "size": 100,
+  "query": {
+    "term": { "traceId": "abc123-def456-ghi789" }
+  },
+  "aggs": {
+    "call_chain": {
+      "terms": {
+        "field": "service.keyword"
+      },
+      "aggs": {
+        "called_by": {
+          "terms": { "field": "calledBy.keyword" }
+        },
+        "calls_to": {
+          "terms": { "field": "calls.keyword" }
+        },
+        "avg_duration": {
+          "avg": { "field": "durationMs" }
+        },
+        "success_rate": {
+          "terms": { "field": "result.keyword" }
+        }
+      }
+    }
+  },
+  "sort": [{ "timestamp": { "order": "asc" } }]
+}
