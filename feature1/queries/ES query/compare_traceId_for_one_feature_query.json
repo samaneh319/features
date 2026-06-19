@@ -1,0 +1,29 @@
+GET /logs-*/_search
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": [
+        { "term": { "feature.keyword": "buy-now-pay-later" } },
+        {
+          "range": {
+            "timestamp": {
+              "gte": "2026-06-01T00:00:00Z",
+              "lte": "2026-06-16T23:59:59Z"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "aggs": {
+    "by_trace": {
+      "terms": { "field": "traceId.keyword", "size": 50 },
+      "aggs": {
+        "services_involved": {
+          "terms": { "field": "service.keyword" }
+        }
+      }
+    }
+  }
+}
