@@ -1,1 +1,19 @@
-
+GET /logs-*/_search
+{
+  "size": 100,
+  "_source": [
+    "timestamp", "service", "feature", "featureFlag",
+    "action", "calledBy", "calls", "result",
+    "endpoint", "method", "durationMs", "traceId"
+  ],
+  "query": {
+    "bool": {
+      "must": [
+        { "term": { "traceId": "abc123-def456-ghi789" } }
+      ]
+    }
+  },
+  "sort": [
+    { "timestamp": { "order": "asc" } }
+  ]
+}
